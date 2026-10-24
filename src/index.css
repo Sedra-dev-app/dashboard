@@ -1,0 +1,288 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================================================
+   SEDRA DESIGN SYSTEM — Thème Sombre & Mode Clair
+   ===================================================================== */
+
+@layer base {
+  :root {
+    --accent: 99 102 241;      /* indigo-500 */
+    --accent-2: 168 85 247;    /* purple-500 */
+    --accent-3: 6 182 212;     /* cyan-500 */
+  }
+
+  html, body, #root { height: 100%; }
+
+  body {
+    font-family: Inter, sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: Geist, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  /* Scrollbars */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: #09090b; }
+  ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+}
+
+@layer components {
+  /* Cartes verre */
+  .glass-card {
+    background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,.1);
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .glass-pill {
+    background: linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,.2);
+  }
+
+  /* Spotlight : bordure lumineuse qui suit la souris */
+  .spotlight { position: relative; isolation: isolate; }
+  .spotlight::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(420px circle at var(--x, 50%) var(--y, 50%), rgba(129,140,248,.55), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity .3s;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .spotlight::after {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), rgba(99,102,241,.07), transparent 40%);
+    opacity: 0;
+    transition: opacity .3s;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .spotlight:hover::before, .spotlight:hover::after { opacity: 1; }
+
+  .text-gradient {
+    background-image: linear-gradient(90deg, #a5b4fc, #d8b4fe, #67e8f9);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  .label-mono {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgb(156 163 175);
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-sm text-white
+           placeholder-gray-500 outline-none transition
+           focus:border-indigo-400/60 focus:bg-white/[0.05] focus:ring-4 focus:ring-indigo-500/10;
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, rgba(255,255,255,.04) 25%, rgba(255,255,255,.09) 50%, rgba(255,255,255,.04) 75%);
+    background-size: 200% 100%;
+    @apply animate-shimmer rounded-lg;
+  }
+
+  /* Grain subtil */
+  .noise::after {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none;
+    opacity: .035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at top, #000 20%, transparent 70%);
+  }
+}
+
+/* =====================================================================
+   RÈGLES DU MODE CLAIR (HTML.LIGHT)
+   ===================================================================== */
+
+html.light body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+html.light ::-webkit-scrollbar-track { background: #f1f5f9; }
+html.light ::-webkit-scrollbar-thumb { background: #cbd5e1; }
+html.light ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Cartes en mode clair : fond blanc pur nacré + ombre soyeuse */
+html.light .glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 252, 0.88));
+  border-color: rgba(226, 232, 240, 0.95);
+  box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.05), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+}
+
+html.light .glass-pill {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(203, 213, 225, 0.8);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* Grille et bruit en mode clair */
+html.light .grid-bg {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+}
+
+/* Textes et contrastes en mode clair */
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-gray-200 {
+  color: #1e293b !important;
+}
+
+html.light .text-gray-300 {
+  color: #334155 !important;
+}
+
+html.light .text-gray-400 {
+  color: #64748b !important;
+}
+
+html.light .text-gray-500 {
+  color: #64748b !important;
+}
+
+html.light .label-mono {
+  color: #64748b !important;
+}
+
+/* Dégradé texte renforcé pour lisibilité sur fond blanc */
+html.light .text-gradient {
+  background-image: linear-gradient(90deg, #4f46e5, #9333ea, #0891b2);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* Sidebar & Header en mode clair */
+html.light aside {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  border-right-color: rgba(226, 232, 240, 0.8) !important;
+}
+
+html.light header {
+  background-color: rgba(255, 255, 255, 0.82) !important;
+  border-bottom-color: rgba(226, 232, 240, 0.8) !important;
+}
+
+/* Bordures & Séparateurs */
+html.light .border-white\/5,
+html.light .border-white\/10,
+html.light .border-white\/15,
+html.light .border-white\/20 {
+  border-color: rgba(226, 232, 240, 0.85) !important;
+}
+
+html.light .divide-white\/5 > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(226, 232, 240, 0.85) !important;
+}
+
+/* Arrière-plans de surfaces / puces */
+html.light .bg-white\/\[0\.01\],
+html.light .bg-white\/\[0\.02\],
+html.light .bg-white\/\[0\.03\],
+html.light .bg-white\/\[0\.04\],
+html.light .bg-white\/5 {
+  background-color: rgba(241, 245, 249, 0.7) !important;
+}
+
+html.light .hover\:bg-white\/\[0\.02\]:hover,
+html.light .hover\:bg-white\/\[0\.03\]:hover,
+html.light .hover\:bg-white\/\[0\.04\]:hover,
+html.light .hover\:bg-white\/5:hover,
+html.light .hover\:bg-white\/10:hover {
+  background-color: rgba(241, 245, 249, 0.95) !important;
+}
+
+html.light .bg-black,
+html.light .bg-black\/40,
+html.light .bg-black\/50,
+html.light .bg-black\/70,
+html.light .bg-black\/90 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+html.light .bg-ink-900,
+html.light .bg-ink-900\/60,
+html.light .bg-ink-900\/80,
+html.light .bg-ink-800,
+html.light .bg-ink-800\/95 {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+}
+
+/* Champs de formulaires en mode clair */
+html.light .input {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light .input::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.light .input:focus {
+  border-color: #6366f1 !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12) !important;
+}
+
+/* Modales & Panneaux */
+html.light [role="dialog"] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.15) !important;
+}
+
+/* Navigation basse mobile */
+html.light nav[aria-label="Navigation mobile"] {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(226, 232, 240, 0.9) !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Palette de commandes cmdk en mode clair */
+html.light [cmdk-root] {
+  background-color: #ffffff !important;
+}
+
+html.light [cmdk-item][data-selected='true'] {
+  background-color: rgba(99, 102, 241, 0.1) !important;
+  color: #4338ca !important;
+}
+
+html.light [cmdk-group-heading] {
+  color: #64748b !important;
+}
